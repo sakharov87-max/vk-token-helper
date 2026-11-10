@@ -1,1 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>VK Token Generator</title>
+  <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+</head>
+<body style="font-family: sans-serif; text-align: center; padding-top: 50px; background: #f9f9f9;">
+  <div style="max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    <h2>Генератор токена ВК (v5)</h2>
+    <button id="btn" style="padding: 15px 30px; font-size: 18px; cursor: pointer; background: #0077ff; color: #fff; border: none; border-radius: 8px; margin-top: 15px;">
+      Получить токен ВК
+    </button>
+    <div id="out" style="margin-top: 25px; padding: 15px; background: #f0f0f0; text-align: left; word-break: break-all; font-family: monospace; font-size: 14px; min-height: 50px; border-radius: 6px;">
+      Нажмите кнопку выше...
+    </div>
+  </div>
 
+  <script>
+    vkBridge.send('VKWebAppInit');
+    
+    document.getElementById('btn').onclick = async () => {
+      const out = document.getElementById('out');
+      out.textContent = 'Запрос прав у VK Bridge...';
+      try {
+        const res = await vkBridge.send('VKWebAppGetAuthToken', {
+          app_id: 54888639,
+          scope: 'wall,photos,docs,groups,offline,stats'
+        });
+        out.innerHTML = '<strong style="color: green;">УСПЕХ! Твой access_token:</strong><br><br>' + res.access_token;
+      } catch (err) {
+        out.innerHTML = '<span style="color: red;">ОШИБКА:</span><br>' + JSON.stringify(err, null, 2);
+      }
+    };
+  </script>
+</body>
+</html>
