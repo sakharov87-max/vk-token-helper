@@ -11,13 +11,13 @@
   </button>
   <pre id="out" style="margin: 30px auto; width: 80%; padding: 15px; background: #f0f0f0; text-align: left; white-space: pre-wrap; word-break: break-all;"></pre>
 
-  <script>
+<script>
     vkBridge.send('VKWebAppInit');
     document.getElementById('btn').onclick = async () => {
       try {
         const res = await vkBridge.send('VKWebAppGetAuthToken', {
           app_id: 54888639,
-          scope: 'wall,photos,docs,groups,offline,stats'
+          scopes: 'wall,photos,docs,groups,offline,stats'
         });
         document.getElementById('out').textContent = res.access_token;
       } catch (err) {
