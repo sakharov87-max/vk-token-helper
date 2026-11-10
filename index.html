@@ -17,7 +17,7 @@
       try {
         const res = await vkBridge.send('VKWebAppGetAuthToken', {
           app_id: 54888639,
-          scopes: 'wall,photos,docs,groups,offline,stats'
+          scope: 'wall,photos,docs,groups,offline,stats'
         });
         document.getElementById('out').textContent = res.access_token;
       } catch (err) {
